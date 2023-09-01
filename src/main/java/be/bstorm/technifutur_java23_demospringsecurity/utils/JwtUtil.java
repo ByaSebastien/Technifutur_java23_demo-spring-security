@@ -7,7 +7,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -64,5 +66,15 @@ public class JwtUtil {
         Claims claims = getClaims(token);
         Date now = new Date();
         return getRole(token) != null && now.after(claims.getIssuedAt()) && now.before(claims.getExpiration());
+    }
+
+    public String extractToken(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7); // Supprimez le préfixe "Bearer "
+        }
+
+        return null; // Gérer le cas où le token n'est pas présent ou mal formaté
     }
 }

@@ -5,9 +5,11 @@ import be.bstorm.technifutur_java23_demospringsecurity.models.entities.Gamer;
 import be.bstorm.technifutur_java23_demospringsecurity.models.form.GamerLoginForm;
 import be.bstorm.technifutur_java23_demospringsecurity.services.GamerService;
 import be.bstorm.technifutur_java23_demospringsecurity.utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -25,8 +27,13 @@ public class GamerController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/hello")
-    public String hello(){
-        return "Hello";
+    public String hello(Authentication authentication){
+//        String token = jwtUtil.extractToken(request);
+        System.out.println(authentication.getAuthorities());
+        System.out.println(authentication.getCredentials());
+        System.out.println(authentication.getName());
+        System.out.println(authentication.getPrincipal());
+        return authentication.getCredentials().toString();
     }
 
     @PostMapping("/login")

@@ -2,10 +2,7 @@ package be.bstorm.technifutur_java23_demospringsecurity.models.entities;
 
 import be.bstorm.technifutur_java23_demospringsecurity.models.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +14,7 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 public class Gamer implements UserDetails {
     @Id
